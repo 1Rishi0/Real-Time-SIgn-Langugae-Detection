@@ -1,7 +1,3 @@
-# Real-Time-SIgn-Langugae-Detection
-Real-Time SIgn Langugae Detection
-
-
 # 🤟 Real-Time Sign Language Detection Web App
 
 A web-based real-time sign language recognition system built using Flask, TensorFlow, and MediaPipe. The application allows users to register/sign in and perform live detection of sign language gestures from webcam input, translating them into meaningful alphabets or words.
