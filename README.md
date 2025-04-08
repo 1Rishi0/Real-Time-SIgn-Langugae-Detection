@@ -37,4 +37,8 @@ This project uses a **custom American Sign Language (ASL) dataset**, created by 
 
 - Hand gestures for A-Z
 - Digits 0–9
+![Alt text](ASL-fingerspelling-alphabets-and-numbers.png)
 
+## 🔁⚙️ Workflow
+
+![Alt text](Workflow.png)
