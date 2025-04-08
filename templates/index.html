@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Sign Language Detection</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background-image: url('{{ url_for('static', filename='3.webp') }}');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            border-radius: 10px;
+            display: inline-block;
+            margin-top: 50px;
+        }
+        h1, h2 {
+            margin: 10px 0;
+        }
+        video, img {
+            border: 2px solid white;
+            border-radius: 10px;
+            width: 640px;
+            height: 480px;
+            display: none;
+        }
+        .controls {
+            margin-top: 20px;
+        }
+        button {
+            margin: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background: #28a745;
+            color: white;
+            transition: 0.3s;
+        }
+        button:hover {
+            background: #218838;
+        }
+        .audio-container {
+            margin-top: 20px;
+        }
+        audio {
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Real-Time Sign Language Detection</h1>
+        <img id="videoStream" width="640" height="480">
+        <h2>Sentence: <span id="sentence">{{ sentence }}</span></h2>
+        
+        <div class="controls">
+            <button onclick="startStream()">Start</button>
+            <button onclick="stopStream()">Stop</button>
+            <button onclick="sendAction('/reset')">Reset</button>
+            <button onclick="sendAction('/space')">Add Space</button>
+            <button onclick="sendAction('/backspace')">Clear Last Letter</button>
+            <button onclick="translateSentence()">Translate</button>
+            <button onclick="window.location.href='/logout'">Return to Home</button>
+        </div>
+        
+        <h2>Translated Sentence: <span id="translated"></span></h2>
+        <div class="audio-container">
+            <audio id="englishAudio" controls hidden></audio>
+            <audio id="hindiAudio" controls hidden></audio>
+        </div>
+    </div>
+    
+    <script>
+        function sendAction(url) {
+            fetch(url, { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.sentence !== undefined) {
+                        document.getElementById('sentence').innerText = data.sentence;
+                    }
+                });
+        }
+        
+        function translateSentence() {
+            fetch('/translate', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('translated').innerText = data.translated;
+                    document.getElementById('englishAudio').src = data.english_audio;
+                    document.getElementById('hindiAudio').src = data.hindi_audio;
+                    document.getElementById('englishAudio').hidden = false;
+                    document.getElementById('hindiAudio').hidden = false;
+                });
+        }
+        
+        function startStream() {
+            document.getElementById('videoStream').src = "/video";
+            document.getElementById('videoStream').style.display = "block";
+        }
+        
+        function stopStream() {
+            document.getElementById('videoStream').src = "";
+            document.getElementById('videoStream').style.display = "none";
+        }
+    </script>
+</body>
+</html>
