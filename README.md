@@ -31,9 +31,13 @@ A web-based real-time sign language recognition system built using Flask, Tensor
 
 This project uses a **custom American Sign Language (ASL) dataset**, created by manually collecting images of hand gestures representing:
 
+
+![Alt text](ASL-fingerspelling-alphabets-and-numbers.png)
+
+
 - Hand gestures for A-Z
 - Digits 0–9
-![Alt text](ASL-fingerspelling-alphabets-and-numbers.png)
+
 
 ## 🔁⚙️ Workflow
 
